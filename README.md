@@ -6,7 +6,7 @@ Environment:
 - Windows 11
 - Anaconda environment
 - Nvidia RTX 3090
-- LLMs - Mistral 7B, Llama 2 13B Chat - Quantized versions
+- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B - Quantized versions
 
 Your Data:
 - Add Word documents to the "Data" folder for the RAG to use
@@ -37,3 +37,25 @@ Getting the Nvidia CUDA libraries installed correctly for use within WSL was cha
 - https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
 
 To tell if you are utilising your Nvidia graphics card, in your command prompt, while in the conda environment, type "nvidia-smi". You should see your graphics card and you're notebook is running you should see your utilisation increase.
+
+### Output examples
+
+Question asked of the model based on the story:
+> Summarise the story for me
+
+Mistral 7B:
+> The story follows Thundertooth, a talking dinosaur who has found a new home in a futuristic city. He is embraced by the citizens and finds purpose beyond merely satisfying his hunger. With the help of the city's brilliant engineers, he founded a toy factory that produces magical, interactive toys. As the years pass, Thundertooth meets a kind dinosaur named Seraphina and starts a family. Together, they explore the city and find a sustainable solution to satisfy Thundertooth's hunger without compromising the well-being of the citizens. The story highlights the importance of understanding and cooperation in overcoming challenges.
+
+Llama 2:
+> Of course! Here's a summary of the story based on the provided sources:
+>
+> Thundertooth, a talking dinosaur from prehistoric times, was transported through a time portal to a futuristic city. He found himself in a world filled with advanced technology and modern marvels, but he struggled to find food to satisfy his hunger. The city's inhabitants, led by Mayor Grace, welcomed Thundertooth and worked together to find a solution to his predicament.
+>
+> With the help of the city's engineers, Thundertooth founded a unique toy factory that produced magical widgets that captured the hearts of both children and adults. He started a family with a kind and intelligent dinosaur named Seraphina, and they had four children who each possessed unique characteristics.
+>
+> When a massive meteor threatened the city, Thundertooth joined forces with Mayor Grace and the leading scientists to find a way to divert or neutralize the threat. With his intelligence and resourcefulness, Thundertooth became an integral part of the team and helped save the city from disaster.
+>
+> That's the gist of the story! Is there anything else you'd like to know?
+
+Orca 2:
+> The story is about Thundertooth, a dinosaur who travels from prehistoric times to a futuristic city. He meets Mayor Grace and her people, who help him find a new home and a purpose. He creates a toy factory that makes amazing widgets, and falls in love with Seraphina, another dinosaur. Together they have four children and live happily. One day, a meteor threatens the city and Thundertooth must use his abilities to save everyone.
