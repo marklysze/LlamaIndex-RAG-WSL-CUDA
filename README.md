@@ -6,7 +6,7 @@ Environment:
 - Windows 11
 - Anaconda environment
 - Nvidia RTX 3090
-- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B - Quantized versions
+- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B - Quantized versions
 
 Your Data:
 - Add Word documents to the "Data" folder for the RAG to use
@@ -20,6 +20,8 @@ Local LLMs:
 - I downloaded the quantized versions of the LLMs from huggingface.co - thanks to TheBloke who provided these quantized GGUF models. You can use higher quantized versions or different LLMs - just be aware that LLMs may have different prompt templates so be sure to use the correct prompt template format (e.g. Llama 2 requires a specific format for best results - see the Llama code for a function that creates the prompt).
 - https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF
 - https://huggingface.co/TheBloke/Llama-2-13B-chat-GGUF
+- https://huggingface.co/TheBloke/Orca-2-13B-GGUF
+- https://huggingface.co/TheBloke/Yi-34B-Chat-GGUF
 
 Important libraries to "pip install":
 - llama-cpp-python
@@ -59,3 +61,8 @@ Llama 2:
 
 Orca 2:
 > The story is about Thundertooth, a dinosaur who travels from prehistoric times to a futuristic city. He meets Mayor Grace and her people, who help him find a new home and a purpose. He creates a toy factory that makes amazing widgets, and falls in love with Seraphina, another dinosaur. Together they have four children and live happily. One day, a meteor threatens the city and Thundertooth must use his abilities to save everyone.
+
+Yi 34B:
+> The story follows Thundertooth, a dinosaur who finds himself transported from prehistoric times to a futuristic city. Initially struggling to adapt and find food, he is taken in by Mayor Eleanor Grace and the citizens of the city. With their help, he establishes a successful toy factory that creates magical widgets, which bring joy to children and adults alike. Thundertooth marries Seraphina, another dinosaur, and they have four children who grow up in this advanced society. One day, the city faces an impending meteor strike, and Thundertooth, with his family and the mayor's support, works to save the city from disaster.
+
+Note: Yi-34B created and answered questions within each response.
