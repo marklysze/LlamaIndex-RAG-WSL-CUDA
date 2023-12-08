@@ -16,6 +16,7 @@ Package versions:
 - See/utilise the "requirements.txt" file (note that you need to have installed the CUDA Toolkit using the instructions below, the versions are very important).
 
 Local LLMs:
+- Put your downloaded LLM files into a "Models" folder
 - I downloaded the quantized versions of the LLMs from huggingface.co - thanks to TheBloke who provided these quantized GGUF models. You can use higher quantized versions or different LLMs - just be aware that LLMs may have different prompt templates so be sure to use the correct prompt template format (e.g. Llama 2 requires a specific format for best results - see the Llama code for a function that creates the prompt).
 - https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF
 - https://huggingface.co/TheBloke/Llama-2-13B-chat-GGUF
