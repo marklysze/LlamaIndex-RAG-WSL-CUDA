@@ -5,7 +5,8 @@ These notebooks demonstrate the use of LlamaIndex for Retrieval Augmented Genera
 Environment:
 - Windows 11
 - Anaconda environment
-- Nvidia RTX 3090
+- NVIDIA RTX 3090
+- NVIDIA CUDA Toolkit Version 12.3
 - LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B - Quantized versions
 
 Your Data:
