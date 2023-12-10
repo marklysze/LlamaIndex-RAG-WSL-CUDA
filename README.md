@@ -39,7 +39,7 @@ Getting the Nvidia CUDA libraries installed correctly for use within WSL was cha
 2. Install instructions within WSL:
 - https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
 
-To tell if you are utilising your Nvidia graphics card, in your command prompt, while in the conda environment, type "nvidia-smi". You should see your graphics card and you're notebook is running you should see your utilisation increase.
+To tell if you are utilising your Nvidia graphics card, in your command prompt, while in the conda environment, type "nvidia-smi". You should see your graphics card and when you're notebook is running you should see your utilisation increase.
 
 ### Output examples
 
