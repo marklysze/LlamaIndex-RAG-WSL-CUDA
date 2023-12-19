@@ -8,9 +8,9 @@ Environment:
 - Nvidia RTX 3090
 - NVIDIA CUDA Toolkit Version 12.3
 - 64GB RAM
-- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B, Mixtral 8x7B - Quantized versions
+- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B, Mixtral 8x7B, Neural 7B, Phi-2 - Quantized versions
 
-**December 2023 Note: Update llama-cpp-python to v0.2.23 in order to run Mixtral 8x7B**
+**December 2023 Notes<br>1: Update llama-cpp-python to at least v0.2.23 in order to run Mixtral 8x7B<br>2: Update llama-cpp-python to at least v0.2.24 in order to run Phi-2**
 
 Your Data:
 - Add Word documents to the "Data" folder for the RAG to use
@@ -27,6 +27,8 @@ Local LLMs:
 - https://huggingface.co/TheBloke/Orca-2-13B-GGUF
 - https://huggingface.co/TheBloke/Yi-34B-Chat-GGUF
 - https://huggingface.co/TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF
+- https://huggingface.co/TheBloke/neural-chat-7B-v3-3-GGUF
+- https://huggingface.co/afrideva/phi-2-GGUF (**Note:** FP16 and quantized versions tried, can't get responses to all questions consistently. Work in progress.)
 
 Important libraries to "pip install":
 - llama-cpp-python
@@ -82,3 +84,23 @@ Q: Who was the main protagonist?
 > The main protagonist in this story is Thundertooth. He is depicted as a highly intelligent and resourceful character who has made a significant impact on the futuristic city and its inhabitants. When a massive meteor threatens Earth, Thundertooth takes charge and works with his family and Mayor Grace to find a solution [1][2]. Additionally, Thundertooth is also the founder of a successful toy factory that produces magical, interactive toys using cutting-edge technology [2]. His unique abilities and leadership skills make him the central figure in this narrative.
 <br><br>
 > Sources:<br>[1] file_name: Thundertooth Part 3.docx, Source 1<br>[2] file_name: Thundertooth Part 2.docx, Source 2
+
+**Phi-2:**
+
+Note: Even using the FP16 model and trying different prompt templates (and no template at all, just the question), I could not get the model to provide a response to every question consistently. I'll continue to investigate whether it's the model or LlamaCPP/Llama CPP Python. Here's a response I did get when not using a prompt template:
+
+> The Thundertooth family, consisting of Lumina, Echo, Sapphire, and Ignis, used their unique abilities to divert a massive meteor from colliding with Earth. With Lumina's force field, Echo's amplified warnings, Sapphire's calming presence, and Ignis's controlled bursts of flames, they successfully changed the course of the meteor, saving the city from destruction. The citizens expressed their gratitude towards the Thundertooth family for their heroic efforts in protecting their home.
+
+It answered the questions well for such a small model, see a couple of other answers below.
+
+Q: Who was the main protagonist?
+
+> The main protagonist of this story is Thundertooth. He is a powerful and courageous creature who takes it upon himself to protect his city from danger. Throughout the narrative, he demonstrates bravery, intelligence, and resourcefulness as he works with his family and other members of the community to overcome challenges and save their home. His determination and selflessness make him an inspiring figure for readers of all ages.
+
+Q: Did anything eventful happen?
+
+> Yes, something very exciting happened! Thundertooth and his family worked together with Mayor Grace and the city's scientists to save their home from a meteor. They used their unique abilities to divert the meteor's path and protect everyone in the city. It was an incredible display of teamwork and bravery that will be remembered for years to come.
+
+**Neural Chat 7B:**
+
+> In these stories, Thundertooth, a talking dinosaur from prehistoric times, finds himself in a futuristic city. He meets Mayor Eleanor Grace and becomes an integral part of the community. Together with his family, they work to solve problems like hunger and impending meteor threats. The city embraces Thundertooth as a symbol of unity between past and future, teaching people about understanding and cooperation.
