@@ -1,6 +1,6 @@
 # RAG with LlamaIndex - Nvidia CUDA + WSL (Windows Subsystem for Linux) + Word documents + Local LLM
 
-These notebooks demonstrate the use of LlamaIndex for Retrieval Augmented Generation using Windows WSL and an Nvidia's CUDA.
+These notebooks demonstrate the use of LlamaIndex for Retrieval Augmented Generation using Windows WSL and Nvidia's CUDA.
 
 Environment:
 - Windows 11
