@@ -49,6 +49,14 @@ Getting the Nvidia CUDA libraries installed correctly for use within WSL was cha
 
 To tell if you are utilising your Nvidia graphics card, in your command prompt, while in the conda environment, type "nvidia-smi". You should see your graphics card and when you're notebook is running you should see your utilisation increase.
 
+#### Using a full Linux OS?
+Check out the equivalent notebooks in this repository: [https://github.com/marklysze/LlamaIndex-RAG-Linux-CUDA](https://github.com/marklysze/LlamaIndex-RAG-Linux-CUDA)
+
+#### Interested in LangChain?
+Check out this repository which shows RAG with LangChain: [https://github.com/marklysze/LangChain-RAG-Linux](https://github.com/marklysze/LangChain-RAG-Linux)
+
+---
+
 ### Output examples
 
 Question asked of the model based on the story:
