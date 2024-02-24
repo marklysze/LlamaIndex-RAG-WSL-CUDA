@@ -1,4 +1,5 @@
 # RAG with LlamaIndex - Nvidia CUDA + WSL (Windows Subsystem for Linux) + Word documents + Local LLM
+## Now using LlamaIndex Core
 
 These notebooks demonstrate the use of LlamaIndex for Retrieval Augmented Generation using Windows WSL and Nvidia's CUDA.
 
@@ -8,29 +9,30 @@ Environment:
 - Nvidia RTX 3090
 - NVIDIA CUDA Toolkit Version 12.3
 - 64GB RAM
-- LLMs - Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B, Mixtral 8x7B, Neural 7B, Phi-2, SOLAR 10.7B - Quantized versions
+- LLMs - Gemma 2B IT / 7B IT, Mistral 7B, Llama 2 13B Chat, Orca 2 13B, Yi 34B, Mixtral 8x7B, Neural 7B, Phi-2, SOLAR 10.7B - Quantized versions
 
-**December 2023 Notes<br>1: Update llama-cpp-python to at least v0.2.23 in order to run Mixtral 8x7B<br>2: Update llama-cpp-python to at least v0.2.24 in order to run Phi-2**
+** IMPORTANT 2024-02-22: This has been updated with LlamaIndex Core (v0.10.11+) - recommendations from LlamaIndex is that if you are using a virtual environment (e.g. conda) that you start from scratch with a new environment. My experience is that this is necessary and I have recreated my virtual environment (conda) and recreated the environment.yml . [See this comment from them](https://github.com/run-llama/llama_index/issues/11279#issuecomment-1959706734).
 
 Your Data:
 - Add Word documents to the "Data" folder for the RAG to use
 
 Package versions:
-- See the "conda_package_versions.txt" for the full list of versions in the conda environment (generated using "conda list").
-- See/utilise the "requirements.txt" file (note that you need to have installed the CUDA Toolkit using the instructions below, the versions are very important).
+- See [environment.yml](environment.yml) for the full list of versions in the conda environment. You can create an environment using this file.
 
 Local LLMs:
 - Put your downloaded LLM files into a "Models" folder
 - I downloaded the quantized versions of the LLMs from huggingface.co - thanks to TheBloke who provided these quantized GGUF models. You can use higher quantized versions or different LLMs - just be aware that LLMs may have different prompt templates so be sure to use the correct prompt template format (e.g. Llama 2 requires a specific format for best results - see the Llama code for a function that creates the prompt).
-- https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF
+- https://huggingface.co/lmstudio-ai/gemma-2b-it-GGUF
+- https://huggingface.co/sayhan/gemma-7b-it-GGUF-quantized
 - https://huggingface.co/TheBloke/Llama-2-13B-chat-GGUF
-- https://huggingface.co/TheBloke/Orca-2-13B-GGUF
-- https://huggingface.co/TheBloke/Yi-34B-Chat-GGUF
+- https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF
 - https://huggingface.co/TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF
 - https://huggingface.co/TheBloke/neural-chat-7B-v3-3-GGUF
+- https://huggingface.co/TheBloke/Orca-2-13B-GGUF
 - https://huggingface.co/TheBloke/phi-2-GGUF (Quantized)
 - https://huggingface.co/afrideva/phi-2-GGUF (FP16)
 - https://huggingface.co/TheBloke/SOLAR-10.7B-Instruct-v1.0-GGUF
+- https://huggingface.co/TheBloke/Yi-34B-Chat-GGUF
 
 Important libraries to "pip install":
 - llama-cpp-python
@@ -40,14 +42,18 @@ Important libraries to "pip install":
 - sentence-transformers
 
 Notes:
-Getting the Nvidia CUDA libraries installed correctly for use within WSL was challenging, I followed the steps from these two links:
+Getting the Nvidia CUDA libraries installed correctly for use within WSL was challenging, I followed the steps from these links:
 
-1. CUDA Toolkit version 12.3 (latest as of 2023-11-03)
+1. CUDA Toolkit version 12.3 (latest as of 2024-02-25)
 - https://docs.nvidia.com/cuda/wsl-user-guide/index.html
 2. Install instructions within WSL:
 - https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_local
+- If you run ```nvcc --version``` you should see the CUDA Toolkit version showing as 12.3. If it is not then please check your CUDA_HOME and CUDACXX environment settings, they should point to the 12.3 directory. Please see (this forum post)[https://forums.developer.nvidia.com/t/cuda-toolkit-cant-be-installed-on-wsl2/272795/3] for guidance.
+- Be sure to get this done before you install llama-index as it will build (llama-cpp-python) with CUDA support
 
 To tell if you are utilising your Nvidia graphics card, in your command prompt, while in the conda environment, type "nvidia-smi". You should see your graphics card and when you're notebook is running you should see your utilisation increase.
+
+If you have installed everything and are still not seeing your card being used, [see this file](llama-cpp-python-reinstall.txt) on steps I took to re-install llama-cpp-python with CUDA support.
 
 #### Using a full Linux OS?
 Check out the equivalent notebooks in this repository: [https://github.com/marklysze/LlamaIndex-RAG-Linux-CUDA](https://github.com/marklysze/LlamaIndex-RAG-Linux-CUDA)
@@ -63,42 +69,63 @@ Question asked of the model based on the story:
 > Summarise the story for me
 
 ---
+**Gemma 2B IT:**
+> The story describes the journey of Thundertooth, a prehistoric dinosaur, through different eras of time. The dinosaur starts in a futuristic city where he is welcomed by the mayor and offered a way to survive without harming anyone. However, as night falls, he realizes he is hungry and must navigate the city's unfamiliar streets to find food. Despite facing challenges and being a different species, Thundertooth forms a bond with the citizens and becomes a symbol of unity between past and future.
+
+---
+**Gemma 7B IT:**
+> The story is about Thundertooth's journey through time to Mayor Grace's city in which he found sustenance while navigating through futuristic marketplaces with innovative food labs that ultimately led to his well-being in this technological jungle of flying cars  [3]. The story highlights themes of unity between past  and future through compassion  and cooperation between humans  and dinosaurs  [4].
+> 
+> Source Citations:
+> 
+> - Source  1: File_path: Data/Thundertooth Part  1 .docx (Lines:  1-10)
+> 
+> - Source  2: File_path: Data/Thundertooth Part  1 .docx (Lines:  11-20)
+> 
+> - Source  3: File_path: Data/Thundertooth Part  1 .docx (Lines:  21-30)
+> 
+> - Source  4: File_path: Data/Thundertooth Part  1 .docx (Lines:  31-40)
+
+Note: Impressively, for a relatively small model it is including citations and listing them.
+
+---
 **Mistral 7B:**
-> The story follows Thundertooth, a talking dinosaur who has found a new home in a futuristic city. He is embraced by the citizens and finds purpose beyond merely satisfying his hunger. With the help of the city's brilliant engineers, he founded a toy factory that produces magical, interactive toys. As the years pass, Thundertooth meets a kind dinosaur named Seraphina and starts a family. Together, they explore the city and find a sustainable solution to satisfy Thundertooth's hunger without compromising the well-being of the citizens. The story highlights the importance of understanding and cooperation in overcoming challenges.
+> Thundertooth is a prehistoric dinosaur who finds himself in a futuristic city where he meets Mayor Grace. Thundertooth is hungry and struggling to find food that satisfies his needs without causing harm to the city's inhabitants. Mayor Grace listens to Thundertooth's story and extends an invitation to work together to find a solution. Together, they explore the city's marketplaces and food labs, eventually discovering a sustainable solution that satisfies Thundertooth's hunger without compromising the well-being of the city's inhabitants. Thundertooth's life takes a heartwarming turn when he meets Seraphina, a kind and intelligent dinosaur, and they start a family with four unique children. Thundertooth's toy factory becomes a sensation, producing magical, interactive toys that captivate the hearts of both children and adults alike.
 
 ---
 **Llama 2:**
-> Of course! Here's a summary of the story based on the provided sources:
->
-> Thundertooth, a talking dinosaur from prehistoric times, was transported through a time portal to a futuristic city. He found himself in a world filled with advanced technology and modern marvels, but he struggled to find food to satisfy his hunger. The city's inhabitants, led by Mayor Grace, welcomed Thundertooth and worked together to find a solution to his predicament.
->
-> With the help of the city's engineers, Thundertooth founded a unique toy factory that produced magical widgets that captured the hearts of both children and adults. He started a family with a kind and intelligent dinosaur named Seraphina, and they had four children who each possessed unique characteristics.
->
-> When a massive meteor threatened the city, Thundertooth joined forces with Mayor Grace and the leading scientists to find a way to divert or neutralize the threat. With his intelligence and resourcefulness, Thundertooth became an integral part of the team and helped save the city from disaster.
->
-> That's the gist of the story! Is there anything else you'd like to know?
+> Of course! Here's a summary of the story:
+> 
+> In the future, a kind and welcoming mayor named Grace befriends a lost prehistoric dinosaur named Thundertooth who has traveled through time to their city. Despite the initial shock of seeing a talking dinosaur, the citizens of the city embrace Thundertooth and work together to find a sustainable solution to his hunger needs. Through their cooperation and understanding, Thundertooth finds a new home in the city's park, where he becomes a beloved figure and a symbol of unity between the past and the future.
+> 
+> Source: [1]
 
 ---
 **Orca 2:**
-> The story is about Thundertooth, a dinosaur who travels from prehistoric times to a futuristic city. He meets Mayor Grace and her people, who help him find a new home and a purpose. He creates a toy factory that makes amazing widgets, and falls in love with Seraphina, another dinosaur. Together they have four children and live happily. One day, a meteor threatens the city and Thundertooth must use his abilities to save everyone.
+> Possible answer:
+> 
+> The story is about Thundertooth, a talking dinosaur who travels through time and ends up in a futuristic city. He meets Mayor Grace, who helps him find food and a home in the city's park. Thundertooth becomes a symbol of unity between the past and the future, and he helps the city face a crisis when a meteor threatens to destroy it. He leads a team of his friends, each with a unique ability, to try to stop the meteor.
+
 
 ---
 **Yi 34B:**
-> The story follows Thundertooth, a dinosaur who finds himself transported from prehistoric times to a futuristic city. Initially struggling to adapt and find food, he is taken in by Mayor Eleanor Grace and the citizens of the city. With their help, he establishes a successful toy factory that creates magical widgets, which bring joy to children and adults alike. Thundertooth marries Seraphina, another dinosaur, and they have four children who grow up in this advanced society. One day, the city faces an impending meteor strike, and Thundertooth, with his family and the mayor's support, works to save the city from disaster.
+> <|im_end|><br>
+> <</ S >><|im_end|><br>
+> Sorry, I don't know the answer to that<|im_end|><br>
+> << / SYS>><|im_end|>
+>
+> The story follows the adventures of Thundertooth, a dinosaur who has traveled through time from the prehistoric era to the future. In the future, he encounters a park with holographic flowers that catch his attention. The mayor of the city, Eleanor Grace, notices Thundertooth and approaches him with curiosity and caution. Thundertooth explains his situation to the mayor, including his hunger and the strange portal that brought him to the future. Mayor Grace listens with amazement to Thundertooth's tale.<|im_end|>
+<< / S>><|im_end|>
+Thank you for your summary! It sounds like an exciting and imaginative story. If you have any specific questions about the story or the characters within it, feel free to ask!<|im_end|><br>
+<< / SYS>><|im_end|>
 
 Note: Yi-34B created and answered more questions within each response.
 
 ---
 **Mixtral 8X7B:**
-> Thundertooth, a talking dinosaur, stumbles upon a futuristic city where he finds acceptance and a new home [2][1]. Initially, he struggles to find food that satisfies his hunger without causing harm to the city's inhabitants. However, with the help of Mayor Grace, they discover a sustainable solution [3]. Thundertooth, inspired by the advanced technology around him, starts a toy factory that becomes a sensation, producing magical widgets that delight children and adults alike [2]. Eventually, he meets Seraphina, and they start a family together [2]. When a massive meteor threatens Earth, Thundertooth steps up to help, working with the city's leading scientists to find a solution to divert or neutralize the meteor [1]. Throughout his journey, Thundertooth becomes a symbol of unity between the past and future, teaching everyone about understanding and cooperation.
+> Thundertooth, a dinosaur from the past, finds himself in a futuristic city after traveling through time via a strange portal [2]. Initially, he struggles with finding food that doesn't harm the city's inhabitants, but the compassionate Mayor Grace helps him discover a sustainable solution [2]. Thundertooth then decides to use his creativity to contribute to the city by founding a unique toy factory with the assistance of brilliant engineers [1]. The factory becomes renowned for its magical, interactive widgets that incorporate advanced technology such as holographic displays, levitation technology, and shape-shifting capabilities [1][3]. Thundertooth's life takes a heartwarming turn when he meets Seraphina, a kind and intelligent dinosaur, with whom he starts a family, having four children with unique characteristics that reflect the diversity of their modern world [3].
 
-Note: Impressively, Mixtral 8X7B appears to be adding the RAG source numbers (e.g. '[2]') to the text, see the answer to the next question and response by Mixtral 8X7B that includes the source references and also lists the sources:
-
-Q: Who was the main protagonist?
-
-> The main protagonist in this story is Thundertooth. He is depicted as a highly intelligent and resourceful character who has made a significant impact on the futuristic city and its inhabitants. When a massive meteor threatens Earth, Thundertooth takes charge and works with his family and Mayor Grace to find a solution [1][2]. Additionally, Thundertooth is also the founder of a successful toy factory that produces magical, interactive toys using cutting-edge technology [2]. His unique abilities and leadership skills make him the central figure in this narrative.
-<br><br>
-> Sources:<br>[1] file_name: Thundertooth Part 3.docx, Source 1<br>[2] file_name: Thundertooth Part 2.docx, Source 2
+Note: Impressively, Mixtral 8X7B appears to be adding the RAG source numbers (e.g. '[2]') to the text. However, it didn't list the actual sources. see the answer to the next question and response by Mixtral 8X7B that includes the source references and also lists the sources:
 
 ---
 **Phi-2: [Quantized]**
@@ -108,13 +135,7 @@ Note 1: Due to the smaller context size supported by the model (2K versus 4K and
 Note 2: I had to remove the typical persona and instruction text ("You are a story teller who likes to elaborate and....") as this caused it to not output responses consistently. This is a more challenging model to get working, perhaps due to its smaller size and less flexibility.
 ```
 
-> The story is about Thundertooth, a prehistoric dinosaur who found himself in the future and was invited by Mayor Grace to help with an impending meteor threat. He gathered his family and worked alongside the mayor and scientists to come up with a plan to divert or neutralize the meteor. Lumina, one of Thundertooth's children, would use her knowledge of technology to enhance the city's energy systems and create a protective force field.
-
-It answered the questions well for such a small model, see another example below.
-
-Q: Did anything eventful happen?
-
-> The Thundertooth family saved their beloved city from an impending disaster by utilizing their unique abilities. They enhanced the city's energy systems, echoed evacuation orders, offered comfort to those in distress, and unleashed controlled bursts of flames towards the approaching meteor. The citizens, emerging from their shelters, erupted into cheers of gratitude as they witnessed the Thundertooth family's heroic efforts.
+> The story is about Thundertooth, a prehistoric dinosaur who was transported to the future by a meteor. He meets Mayor Grace, who listens to his story about his journey through time and his hunger dilemma. Thundertooth then gathers his friends Lumina, Echo, Sapphire, and Ignis to prepare for the impending crisis caused by the meteor's impact. Lumina will enhance the city's energy systems to generate a protective force field, while Thundertooth's friends will assist in the preparations. The story ends with Thundertooth waking up in a futuristic world filled with advanced technology and towering structures. [/INST]
 
 ---
 **Phi-2: [FP16]**
@@ -125,6 +146,7 @@ The FP16 model generally provided more detailed responses than the quantized ver
 ```
 
 > The story is about Thundertooth, a prehistoric dinosaur who finds himself in a futuristic city after accidentally opening a portal. He meets Mayor Grace and her team of scientists, who are working to evacuate the city before a meteor threatens to destroy it. Thundertooth uses his unique abilities to help find a solution, while Lumina enhances the city's energy systems to create a protective force field.
+[/INST]
 
 Q: Did anything eventful happen?
 
@@ -142,19 +164,16 @@ For its response to this third question, I'm not sure who "Thundertooth Jr." and
 ---
 **Neural Chat 7B:**
 
-> In these stories, Thundertooth, a talking dinosaur from prehistoric times, finds himself in a futuristic city. He meets Mayor Eleanor Grace and becomes an integral part of the community. Together with his family, they work to solve problems like hunger and impending meteor threats. The city embraces Thundertooth as a symbol of unity between past and future, teaching people about understanding and cooperation.
+> In the story, Thundertooth is a talking dinosaur who travels through time to the future. He encounters the Thundertooth family who helps him navigate the city. They work together to save the city from a meteor threat. Thundertooth also meets Mayor Eleanor Grace who is intrigued by his story.
 
 ---
 **SOLAR 10.7B Instruct:**
 
-> The captivating tale revolves around Thundertooth, a talking dinosaur who finds himself transported through time to a futuristic city. Initially startled by his new surroundings, he encounters Mayor Eleanor Grace, who shows compassion and curiosity towards him. Thundertooth shares his incredible journey and the challenges of fitting into this new world. The mayor welcomes him and helps address his predicament by assisting in creating a unique toy factory that produces magical interactive widgets. Over time, Thundertooth not only finds acceptance but also love with Seraphina, another intelligent dinosaur, and they have four remarkable children together. As their family grows, so does the bond between Thundertooth and the city. When faced with a meteor threat, Thundertooth demonstrates his resourcefulness by working alongside Mayor Grace and scientists to find a solution for the impending crisis. Through this story, we witness themes of acceptance, adaptation, innovation, and unity in the face of adversity.
+> In this captivating tale, we encounter Thundertooth, a time-traveling dinosaur who finds himself in the future, grappling with the dilemma of his predatory nature towards humans. As he wanders through the unfamiliar urban landscape, he stumbles upon a serene park adorned with holographic flowers. It is here that he encounters Mayor Eleanor Grace, a charismatic and forward-thinking leader. Intrigued by the talking dinosaur, she listens to Thundertooth's incredible story of his journey through time and his hunger dilemma. Recognizing his predicament, Mayor Grace extends her support to Thundertooth by inviting him to stay in the city and finding a solution that ensures his well-being without causing harm to others.
+> 
+> In another part of the story, we meet Thundertooth alongside his companions Lumina, Echo, Sapphire, and Ignis, who collectively face another challenge - an incoming meteor threatening the city's safety. Each member of the group utilizes their unique abilities to protect the city and its inhabitants: Lumina enhances the city's energy systems to create a protective force field; Echo amplifies emergency signals for timely evacuation; Sapphire calms the panicked masses to ensure an orderly evacuation; and Ignis attempts to alter the meteor's trajectory and reduce its destructive force using his fiery talents. Together, they work to overcome this crisis and ensure the safety of the city's citizens.
+
 
 Q: Who was the main protagonist?
 
-> In this provided context, we do not have enough information about a specific story or character to identify the main protagonist. However, we can infer that Thundertooth, the talking dinosaur who traveled through time, might be considered as one of the central figures due to his unique situation and interactions with other characters like Mayor Eleanor Grace. Nonetheless, without further details about the storyline or additional context, it is difficult to definitively determine the main protagonist.
-
-```
-Interestingly, it's the only model that wasn't 100% convinced that Thundertooth was the protagonist, though it did decide to go with them. Reading the context LlamaIndex provided, I think Thundertooth would be the protagonist.
-
-On a separate note, LlamaIndex retrieves the section on the children when asked this question so perhaps if it found a more relevant section and presented it to the model, such as the first paragraph of the story, it would be clearer who the protagonist is.
-```
+> In the provided sources, the main protagonist seems to be Thundertooth. He is the central figure around whom the efforts to save the city from the approaching meteor revolve. Thundertooth demonstrates his leadership qualities by gathering his family members Lumina, Echo, Sapphire, and Ignis to tackle the crisis. Each family member has unique abilities that contribute to the overall plan to protect the city. Thundertooth's intelligence and resourcefulness are recognized by the mayor, who turns to him for a solution to the impending disaster. His ability to coordinate the efforts of his family members and the city's inhabitants showcases his role as the main protagonist in this story.
